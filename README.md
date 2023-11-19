@@ -6,6 +6,11 @@ IMAGE -->
 </br>
 <img width="203" alt="image" src="https://github.com/kazakhbala01/sdp-final/assets/125587417/3b046236-32a5-466a-ad16-138de18b3e98">
 
+
+DIAGRAM
+</br>
+![photo_2023-11-19_23-26-18](https://github.com/kazakhbala01/sdp-final/assets/125587417/503376ce-e0ac-42c7-b650-8ce217efe966)
+
 ## Code
 ### GUI
 #### Using Jframe create window with textarea and buttons
@@ -216,9 +221,22 @@ class TxtTextTypeFactory implements TextTypeFactory {
 
 ```
 ### Singleton
-#### Using nigger
+#### Used singleton pattern to return publisher class
 ```java
+class PublisherSingleton {
+    private static Publisher instance;
 
+    private PublisherSingleton() {
+        // Private constructor to enforce Singleton pattern
+    }
+
+    public static Publisher getInstance() {
+        if (instance == null) {
+            instance = new Publisher();
+        }
+        return instance;
+    }
+}
 ```
 ### Adapter pattern
 #### Adapt between previously chosen docx type to txt and otherwise
@@ -369,5 +387,38 @@ class ItalicDecorator extends TextDecorator {
 interface Observer {
     void update(String content);
 }
+import java.util.ArrayList;
+import java.util.List;
 
+class Publisher {
+    private List<Observer> observers = new ArrayList<>();
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers(String content) {
+        for (Observer observer : observers) {
+            observer.update(content);
+        }
+    }
+}
+class ConsoleObserver implements Observer {
+    private boolean showInConsole = true;
+
+    public void setShowInConsole(boolean showInConsole) {
+        this.showInConsole = showInConsole;
+    }
+
+    @Override
+    public void update(String content) {
+        if (showInConsole) {
+            System.out.println("ConsoleObserver received update: " + content);
+        }
+    }
+}
 ```
