@@ -1,11 +1,31 @@
 # 💻 Text editing application by Almas Amanbay, Akzhan Omir, Adilkhan Kenzhaliev; group SE-2215
 ## 🎨 Change text type and case using GUI!
-### We used 6 patterns such as Factory, Strategy, Singleton, Observer, Decorator, Adapter.
-Simply type something and click buttons below to change between different cases or change type.
-IMAGE -->
+### 1. We used 6 patterns such as Factory, Strategy, Singleton, Observer, Decorator, Adapter.
+### 2. Simply type something and click buttons below to change between different cases or change type.
+### 3. The idea is editing text with various of types of cases and fonts
+### 4. editing text and copy it for work furthermore 
+### 5. FINISH SUCCESSFULLY SDP DISCIPLINE AND GET 85+ on final
+#### KEY POINTS
+- Changing cases
+- Formatting text
+- Change type of text
+- Change font of the text
+#### CHALLENGES FACED
+- Combining all patterns alltogether
+- Creating JFrame
+- Complex
+#### OUTCOMES
+- Working in team
+- Improving coding skills
+- And theory knowledge
+#### FUTURE IMPROVEMENTS
+- Create real file adapting algorithm
+- Adding more features
+- Improve visual and user-friendly interface
+ 
+IMAGES -->
 </br>
 <img width="203" alt="image" src="https://github.com/kazakhbala01/sdp-final/assets/125587417/3b046236-32a5-466a-ad16-138de18b3e98">
-
 
 DIAGRAM
 </br>
@@ -35,7 +55,7 @@ public class TextEditorGUI extends JFrame {
         caseContext = new CaseContext();
         adapterContext = new TextAdapterContext();
         consoleObserver = new ConsoleObserver();
-        Publisher.getInstance().addObserver(consoleObserver);
+        PublisherSingleton.getInstance().addObserver(consoleObserver);
     }
 
     private void initUI() {
@@ -60,6 +80,7 @@ public class TextEditorGUI extends JFrame {
             }
         });
         add(chooseTypeBtn);
+
 
         textPane = new JTextPane();
         add(new JScrollPane(textPane));
@@ -143,9 +164,13 @@ public class TextEditorGUI extends JFrame {
         switchTxtDocxBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                adapterContext.setAdapter(new TxtToDocxAdapter());
-                System.out.println(adapterContext.adaptText(textPane.getText()));
-                notifyObservers();
+                if (textTypeFactory != null) {
+                    TextType textType = textTypeFactory.createTextType("DummyType"); // Replace "DummyType" with the actual type
+                    textPane.setText(textType.createTextComponent(textPane.getText()).getContent());
+                    String typeInfo = "Type: " + textType.getType();  // Use getType() method
+                    System.out.println(typeInfo);  // For example, print the type information
+                    notifyObservers();
+                }
             }
         });
         add(switchTxtDocxBtn);
@@ -177,7 +202,7 @@ public class TextEditorGUI extends JFrame {
     }
 
     private void notifyObservers() {
-        Publisher.getInstance().notifyObservers(textPane.getText());
+        PublisherSingleton.getInstance().notifyObservers(textPane.getText());
     }
 
     private void applyBoldItalicStyle(JTextPane textPane, boolean bold, boolean italic) {
@@ -198,6 +223,7 @@ public class TextEditorGUI extends JFrame {
         });
     }
 }
+
 
 ```
 ### Factory pattern
